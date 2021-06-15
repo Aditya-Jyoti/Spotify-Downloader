@@ -6,6 +6,7 @@ meaning it downloads the MP3 version of the provided spotify playlist
 
 Feel free to make pull requests
 
+
 ## Know Limitations and Issues
 
 
@@ -19,10 +20,17 @@ Feel free to make pull requests
 
 Run `$pip install -r requirements.txt` in your command line
 
+
 ## Usage
 
 
-1. Clone the repository `$`
+1. Clone the repository `$git clone https://github.com/Reverend-Toady/Spotify-Downloader.git`
 2. Traverse to the folder where the repository is cloned/ downloaded
 3. Run `$py main.py -u URL-TO-PLAYLIST` in your command line
 4. the `-u` parameter takes in the url to your spotify playlist
+
+
+## Note
+
+
+This code works in python 3.8 and above (or so im assuming)
