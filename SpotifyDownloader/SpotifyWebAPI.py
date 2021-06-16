@@ -2,6 +2,10 @@ import requests
 from urllib.parse import urlencode
 from urllib.request import urlopen
 from urllib.error import HTTPError
+import requests
+from urllib.parse import urlencode
+from urllib.request import urlopen
+from urllib.error import HTTPError
 import re
 import json
 from base64 import b64encode
@@ -23,7 +27,7 @@ def get_playlists(spotify_url):
     r = requests.get(f"https://api.spotify.com/v1/playlists/{playlist_id}", headers=headers)
 
     if str(r) == '<Response [400]>' or str(r) == '<Response [401]>':
-        raise ModuleNotFoundError('Invalid Spotify Token')
+        raise TypeError('Invalid Spotify Token')
 
     else:
         returned_tracks = {}
