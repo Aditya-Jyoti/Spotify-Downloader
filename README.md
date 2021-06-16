@@ -20,6 +20,9 @@ Feel free to make pull requests
 Run `$pip install -r requirements.txt` in your command line
 
 
+Visit the [Installation Guide](https://github.com/Reverend-Toady/Spotify-Downloader/blob/main/INSTALLATION.md) 
+
+
 ## Usage
 
 
