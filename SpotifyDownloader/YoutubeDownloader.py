@@ -1,20 +1,31 @@
 from SpotifyDownloader.SpotifyWebAPI import get_playlists, get_access_token
 from pytube import YouTube
+from urllib.error import HTTPError
 import os
-from exceptions import AccessTokenExpired
 
-def downloader(spotify_url):
+
+def downloader(spotify_url, location):
     try:
         track = get_playlists(spotify_url)
-    except AccessTokenExpired():
+    except ModuleNotFoundError():
         get_access_token()
         track = get_playlists(spotify_url)
 
-    path = f'G:\\youtube-mp3\\{track[0].replace(" ", "-")}'
-    os.mkdir(path)
+    path = f'{location}\\{track[0].replace(" ", "-")}'
 
-    for url in track[1].values():
-        yt = YouTube(url)
-        video = yt.streams.filter(only_audio=True).first()
+    os.makedirs(path)
 
-        video.download(path)
+    dict_of_playlist = track[1]
+
+    for url_name in dict_of_playlist:
+        try:
+            yt = YouTube(dict_of_playlist[url_name])
+            video = yt.streams.filter(only_audio=True).first()
+            video.download(path)
+
+            print(f"Downloaded {url_name} at -> {path}")
+
+        except HTTPError:
+            print(f'Couldn\'t download "{url_name}", continuing')
+            continue
+
