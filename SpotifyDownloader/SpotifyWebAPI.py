@@ -11,14 +11,11 @@ import json
 from base64 import b64encode
 
 
-with open('MY_SECRETS.json', 'r') as f:
-    load_file = json.load(f)
-    spotify_key = load_file['SPOTIFY_KEY']
-    spotify_client_id = load_file['spotify_client_id']
-    spotify_client_secret = load_file['spotify_client_secret']
-
-
 def get_playlists(spotify_url):
+    with open('MY_SECRETS.json', 'r') as f:
+        load_file = json.load(f)
+        spotify_key = load_file['SPOTIFY_KEY']
+    
     headers = {
         'Authorization': f'Bearer {spotify_key}'
     }
@@ -56,6 +53,12 @@ def get_playlists(spotify_url):
         return playlist_name, returned_tracks
 
 def get_access_token():
+    with open('MY_SECRETS.json', 'r') as f:
+        load_file = json.load(f)
+        spotify_client_id = load_file['spotify_client_id']
+        spotify_client_secret = load_file['spotify_client_secret']
+
+    
     headers = {
         'Authorization': f'Basic {b64encode(f"{spotify_client_id}:{spotify_client_secret}".encode()).decode()}',
     }
