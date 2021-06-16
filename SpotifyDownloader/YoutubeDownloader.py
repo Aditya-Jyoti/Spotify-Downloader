@@ -7,7 +7,7 @@ import os
 def downloader(spotify_url, location):
     try:
         track = get_playlists(spotify_url)
-    except ModuleNotFoundError():
+    except TypeError:
         get_access_token()
         track = get_playlists(spotify_url)
 
