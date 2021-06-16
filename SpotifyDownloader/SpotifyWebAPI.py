@@ -1,10 +1,11 @@
 import requests
 from urllib.parse import urlencode
 from urllib.request import urlopen
+from urllib.error import HTTPError
 import re
 import json
 from base64 import b64encode
-from exceptions import AccessTokenExpired
+
 
 with open('MY_SECRETS.json', 'r') as f:
     load_file = json.load(f)
@@ -21,8 +22,9 @@ def get_playlists(spotify_url):
     playlist_id = spotify_url.split('/')[-1].split('?')[0]
     r = requests.get(f"https://api.spotify.com/v1/playlists/{playlist_id}", headers=headers)
 
-    if r.json() == {'error': {'status': 401, 'message': 'The access token expired'}}:
-        raise AccessTokenExpired('The Spotify Access Token Expired')
+    if str(r) == '<Response [400]>' or str(r) == '<Response [401]>':
+        raise ModuleNotFoundError('Invalid Spotify Token')
+
     else:
         returned_tracks = {}
 
@@ -36,11 +38,16 @@ def get_playlists(spotify_url):
                 artists.append(artist['name'])
             artist_name = ' '.join(artists)
 
-            query_string = urlencode({'search_query': artist_name + ' ' + track['track']['name']})
-            htm_content = urlopen('http://www.youtube.com/results?' + query_string)
-            search_results = re.findall(r'/watch\?v=(.{11})', htm_content.read().decode())
+            try:
+                query_string = urlencode({'search_query': artist_name + ' ' + track['track']['name']})
+                htm_content = urlopen('http://www.youtube.com/results?' + query_string)
+                search_results = re.findall(r'/watch\?v=(.{11})', htm_content.read().decode())
 
-            returned_tracks.update({f'{song_name}': f'http://www.youtube.com/watch?v={search_results[0]}'})
+                returned_tracks.update({f'{song_name}': f'http://www.youtube.com/watch?v={search_results[0]}'})
+
+            except HTTPError:
+                print(f'Couldn\'t download "{song_name}", continuing')
+                continue
 
         return playlist_name, returned_tracks
 
