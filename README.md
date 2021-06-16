@@ -11,7 +11,10 @@ Feel free to make pull requests
 
 
 1. Take a very long time to actually download the playlist
-3. Raises `HTTP 404` error often (in process of fixing it)
+- Note: Download time depends on internet connection
+
+2. Raises `HTTP 404` error often (in process of fixing it)
+- Note: Fixed known occurences of this issue
 
 
 ## Installation Process
