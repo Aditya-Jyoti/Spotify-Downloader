@@ -41,4 +41,5 @@ Visit the [Installation Guide](https://github.com/Reverend-Toady/Spotify-Downloa
 ## Note
 
 
-This code works in python 3.8 and above (or so im assuming)
+1. This code works in python 3.8 and above (or so im assuming)
+2. This program downloads songs off of youtube and not spotify itself
